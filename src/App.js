@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -11,13 +11,19 @@ import Select from '@mui/material/Select';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import Modal from '@mui/material/Modal';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+
+import MuiAlert from '@mui/material/Alert';
 
 import ShowModal from './Components/ShowModal';
 import Btn from './Components/Btn';
 
 import { styled } from '@mui/styles';
 
-
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const MyCard = styled(Card)({ 
   fontFamily: "'IBM Plex Sans', sans-serif",
@@ -46,7 +52,10 @@ const InputFile = styled(TextField)({
 const App = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setSnack(false);
+  }
 
   const [data, setData] = useState({
     name:"",
@@ -69,7 +78,17 @@ const App = () => {
   // Treść kodu html 
   const [code, setCode] = useState(null);
 
-  
+  // Pokazywanie potwierdzenia kopiowania
+  const [snack, setSnack] = useState(false);
+
+  const handleCopySignature = e => {
+      navigator.clipboard.writeText(code);
+      setSnack(true);
+  }
+
+  const handleCloseSnack = (event, reason) => {
+      setSnack(false);
+  }
 
   const workspace = workplaces.map((workplace, index) => {
     return(
@@ -203,6 +222,7 @@ const generateSignature = (data) => {
 
   return (
     <div className="App">
+      <Stack>
       <Box sx={{ maxWidth: 600, margin: "50px auto"}}>
         <MyCard variant="outlined">
           <h1>Generator stopek</h1>
@@ -231,18 +251,19 @@ const generateSignature = (data) => {
             shrink: true,
           }}/>
             <Btn icon={<SendIcon />} handle={handleSubmit} name={"Generuj"}/>
-          {/* <MyButtonWrapper>
-          <MyButton variant="contained" endIcon={<SendIcon />} onClick={e => handleSubmit(e)}>
-              Generuj
-            </MyButton>
-          </MyButtonWrapper> */}
           </Form>
         </MyCard>
       </Box>
-      <ShowModal signHTML={code} closeModal={handleClose} open={open}/>
-      {/* <pre style={pre}>
-        {code}
-      </pre> */}
+      <ShowModal signHTML={code} closeModal={handleClose} open={open} snack={snack} handleCopySignature={handleCopySignature} handleClose={handleCloseSnack}/>
+      {snack ? 
+      <Snackbar open={snack} autoHideDuration={6000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="success">
+            Skopiowano
+        </Alert>
+      </Snackbar>
+       : null}
+
+      </Stack>
     </div>
   );
 }

@@ -50,7 +50,7 @@ const pre = {
   width:'100%',
 };
 
-const ShowModal = ({signHTML, closeModal, open}) => {
+const ShowModal = ({signHTML, closeModal, open, snack, handleCopySignature, handleCloseSnack}) => {
     return(
       <Modal
         open={open}
@@ -69,7 +69,7 @@ const ShowModal = ({signHTML, closeModal, open}) => {
               </pre>
             </div>
           </Typography>
-          <ModalFooter code={signHTML}/>
+          <ModalFooter snack={snack} handleCopySignature={handleCopySignature} handleCloseSnack={handleCloseSnack}/>
         </ModalBox>
       </Modal>
     )

@@ -2,14 +2,11 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import Btn from './Btn';
 
-const ModalFooter = ({code}) => {
 
-    const handleCopyCode = e => {
-        navigator.clipboard.writeText(code);
-    }
+const ModalFooter = ({snack, handleCopySignature, handleCloseSnack}) => {
 
     return(
-        <Btn icon={<ContentCopyIcon/>}handle={handleCopyCode} name={"Kopiuj stopkę"}/>
+        <Btn icon={<ContentCopyIcon/>} handle={handleCopySignature} name={"Kopiuj stopkę"}/>
     )
 }
 export default ModalFooter;
