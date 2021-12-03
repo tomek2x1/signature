@@ -2,7 +2,11 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const style = {
+import { styled } from '@mui/styles';
+
+import ModalFooter from './ModalFooter';
+
+const ModalBox = styled(Box)({ 
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -13,15 +17,37 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  backgroundColor:"#eaeced",
+  borderRadius:"20px",
+  overflow:"hidden",
+  padding:"30px",
+  color:" #001f35",
+  fontSize:30,
+  fontWeight:600,
+});
 
-};
+const ModalHeader = styled(Typography)({ 
+  backgroundColor:"#eaeced",
+  fontFamily: "'IBM Plex Sans', sans-serif",
+});
+
+const ModalBody = styled(Box)({ 
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  minWidth: 400,
+  maxWidth: '80vw',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+});
 
 const pre = {
   fontSize:10,
   wordWrap: 'break-word',
   width:'100%',
-  whiteSpace:'normal',
-  wordWrap: 'break-word',
 };
 
 const ShowModal = ({signHTML, closeModal, open}) => {
@@ -32,10 +58,10 @@ const ShowModal = ({signHTML, closeModal, open}) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+        <ModalBox>
+          <ModalHeader id="modal-modal-title" variant="div" component="div">
             Kod stopki
-          </Typography>
+          </ModalHeader>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div>
               <pre style={pre}>
@@ -43,7 +69,8 @@ const ShowModal = ({signHTML, closeModal, open}) => {
               </pre>
             </div>
           </Typography>
-        </Box>
+          <ModalFooter code={signHTML}/>
+        </ModalBox>
       </Modal>
     )
 }
