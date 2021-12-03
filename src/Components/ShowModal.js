@@ -8,14 +8,20 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   minWidth: 400,
+  maxWidth: '80vw',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+
 };
 
 const pre = {
-  fontSize:10
+  fontSize:10,
+  wordWrap: 'break-word',
+  width:'100%',
+  whiteSpace:'normal',
+  wordWrap: 'break-word',
 };
 
 const ShowModal = ({signHTML, closeModal, open}) => {
