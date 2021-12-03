@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -78,9 +78,6 @@ const App = () => {
   // Treść kodu html 
   const [code, setCode] = useState(null);
 
-  // Pokazywania modala  
-  const [modal, setModal] = useState(false);
-
   const workplaces = ["Pracownik biurowy w Zamościu", "Salon sprzedaży w Warszawie", "Salon sprzedaży w Krakowie" ,"Salon sprzedaży w Rzeszowie" ,"Salon sprzedaży w Zamościu" ,"Punkt sprzedaży w Gdańsku" ,"Punkt sprzedaży w Poznaniu"];
 
   const workspace = workplaces.map((workplace, index) => {
@@ -95,6 +92,7 @@ const App = () => {
   }
 
   const validationForm = (objToValid) => {
+    console.log("objToValid", objToValid)
     const localState = {
       name:"",
       position:"",
@@ -147,6 +145,7 @@ const App = () => {
 
     const validationFormResult = validationForm(data);
     if(validationFormResult){
+      console.log("cos")
       generateSignature(data);
     }
   }
@@ -206,7 +205,7 @@ const generateSignature = (data) => {
   `;
 
   setCode(signatureHTML);
-  setModal(true);
+  setOpen(true);
 }
 
   return (
@@ -246,19 +245,7 @@ const generateSignature = (data) => {
           </Form>
         </MyCard>
       </Box>
-      {/* <ShowModal signHTML={code} closeModal={setModal(false)} modal={modal}/> */}
-      <Button onClick={handleOpen}>Open modal</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box>
-            Text in a modal
-        </Box>
-      </Modal>
-      <pre>{code}</pre>
+      <ShowModal signHTML={code} closeModal={handleClose} open={open}/>
     </div>
   );
 }
