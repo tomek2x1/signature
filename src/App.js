@@ -253,9 +253,21 @@ const generateSignature = (data) => {
           </Form>
         </MyCard>
       </Box>
-      <ShowModal signHTML={code} closeModal={handleClose} open={open}/>
+      {/* <ShowModal signHTML={code} closeModal={handleClose} open={open}/> */}
+      <pre style={pre}>
+        {code}
+      </pre>
     </div>
   );
 }
+
+const pre = {
+  fontSize:10,
+  wordWrap: 'break-word',
+  width:'80%',
+  whiteSpace:'normal',
+  wordWrap: 'break-word',
+  margin:'0 auto',
+};
 
 export default App;
