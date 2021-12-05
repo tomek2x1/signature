@@ -1,4 +1,5 @@
 import React from "react";
+import { storage } from "../firebase";
 
 import { styled } from "@mui/styles";
 import { useFormik } from "formik";
@@ -49,12 +50,44 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
     const { name, position, phone, email, workplace } = formValues;
     if (name && position && phone && email && workplace) {
       setData({ ...data, ...formValues });
-      generateSignature(formValues);
+      if (data.file === "") {
+        generateSignature(formValues);
+      } else {
+        addImageToServer(formValues);
+      }
     }
   };
 
+  const addImageToServer = (formValues) => {
+    const uploadImage = storage.ref(`images/${data.file.name}`).put(data.file);
+    uploadImage.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(data.file.name)
+          .getDownloadURL()
+          .then((url) => {
+            setData({ ...data, imageURL: url });
+            console.log(url);
+          })
+          .then(() => {
+            generateSignature(formValues);
+          });
+      }
+    );
+  };
+
+  const handleImage = (e) => {
+    var file = e.target.files[0];
+    setData({ ...data, file: file });
+  };
+
   const generateSignature = (signValues) => {
-    console.log(signValues);
     const typeOfWorker = workplaces.filter(
       (workplace) => workplace.type === signValues.workplace
     )[0];
@@ -64,12 +97,12 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
         <div>
             <div style="float: left; width: 214px; text-align: center; min-height: 120px; padding-bottom:10px;">
                 <img style="height: 100px; padding-top: 15px;"
-                    src=${avatarImage}>
+                    src=${data.imageURL === "" ? avatarImage : data.imageURL}>
             </div>
             <div
                 style="float: left; border-left: 1px solid #eff1f3; min-height: 120px; width: 250px; padding-left: 20px; padding-bottom:10px;">
                 <p
-                    style="text-align: left; font-size: 16px; margin: 0px; padding: 0px; color: #001f35; font-weight: 700;">${
+                    style="text-align: left; font-size: 18px; margin: 0px; padding: 0px; color: #001f35; font-weight: 700;">${
                       signValues.name
                     }</p>
                 <div style="font-size: 13px; color: #001f35; margin-bottom: 20px;">${
@@ -231,19 +264,21 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
               {formik.touched.workplace && formik.errors.workplace}
             </FormHelperText>
           </SelectFormControl>
-          {/* <InputFile
+          <InputFile
             type="file"
             id="file"
             name="file"
-            value={data.file}
             label="Wyślij swoje zdjęcie"
             fullWidth
             margin="dense"
             size="small"
+            onChange={(e) => {
+              handleImage(e);
+            }}
             InputLabelProps={{
               shrink: true,
             }}
-          /> */}
+          />
           <Btn
             icon={<SendIcon />}
             handle={formik.handleSubmit}

@@ -26,6 +26,8 @@ const App = () => {
     phone: "",
     email: "",
     workplace: "",
+    file: "",
+    imageURL: "",
   });
 
   // Treść kodu html
