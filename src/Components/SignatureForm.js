@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { styled } from "@mui/styles";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -14,20 +16,27 @@ import FormControl from "@mui/material/FormControl";
 
 import Btn from "./Btn";
 
+const validationSchema = yup.object({
+  name: yup.string().required("Podaj swoje imię i nazwisko"),
+  position: yup.string().required("Podaj swoją nazwę stanowiska"),
+  phone: yup
+    .string()
+    .matches(
+      /(?<!\w)(\(?(\+|00)?48\)?)?[ -]?\d{3}[ -]?\d{2,3}[ -]?\d{2,3}(?!\w)/g,
+      "Numer telefonu jest niepoprawny"
+    )
+    .required("Podaj swój numer telefonu"),
+  email: yup
+    .string()
+    .required("Podaj swój adres email")
+    .matches(
+      /^[a-z\d]+[\w\d.-]*@(?:[a-z\d]+[a-z\d-]+\.){1,5}[a-z]{2,6}$/i,
+      "Adres emial jest niepoprawny"
+    ),
+  workplace: yup.string().required("Miejsce pracy jest wymagane"),
+});
+
 const SignatureForm = ({ data, setData, setCode, setOpen }) => {
-  const [validation, setValidation] = useState({
-    name: "",
-    position: "",
-    phone: "",
-    email: "",
-    workplace: "",
-  });
-
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-    setValidation({ ...validation, [e.target.name]: "" });
-  };
-
   const workspace = workplaces.map((workplace, index) => {
     return (
       <MenuItem key={index} value={workplace.type}>
@@ -36,110 +45,51 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
     );
   });
 
-  const validationForm = (objToValid) => {
-    const localState = {
-      name: "",
-      position: "",
-      phone: "",
-      email: "",
-      workplace: "",
-    };
-    if (objToValid.name == "") {
-      localState.name = "Podaj imię i nazwisko";
-    } else {
-      localState.name = "";
-    }
-
-    if (objToValid.position == "") {
-      localState.position = "Podaj nazwę stanowiska";
-    } else {
-      localState.position = "";
-    }
-
-    const phoneRegex =
-      /(?<!\w)(\(?(\+|00)?48\)?)?[ -]?\d{3}[ -]?\d{3}[ -]?\d{3}(?!\w)/g;
-    if (objToValid.phone.match(phoneRegex)) {
-      localState.phone = "";
-    } else {
-      localState.phone = "Podaj numer telefonu";
-    }
-
-    const emailRegex =
-      /^[a-z\d]+[\w\d.-]*@(?:[a-z\d]+[a-z\d-]+\.){1,5}[a-z]{2,6}$/i;
-    if (objToValid.email.match(emailRegex)) {
-      localState.email = "";
-    } else {
-      localState.email = "Podaj poprawny adres email";
-    }
-
-    if (objToValid.workplace == "") {
-      localState.workplace = "Podaj miejsce pracy";
-    } else {
-      localState.workplace = "";
-    }
-
-    if (
-      localState.name ||
-      localState.position ||
-      localState.phone ||
-      localState.email ||
-      localState.workplace
-    ) {
-      setValidation(localState);
-      return false;
-    } else {
-      return true;
+  const handleSubmit = (formValues) => {
+    const { name, position, phone, email, workplace } = formValues;
+    if (name && position && phone && email && workplace) {
+      setData({ ...data, ...formValues });
+      generateSignature(formValues);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const validationFormResult = validationForm(data);
-    if (validationFormResult) {
-      generateSignature(data);
-    }
-  };
-
-  const generateSignature = (data) => {
+  const generateSignature = (signValues) => {
     const typeOfWorker = workplaces.filter(
-      (workplace) => workplace.type === data.workplace
+      (workplace) => workplace.type === signValues.workplace
     )[0];
     const signatureHTML = `<div>
   <div style="max-width:600px; font-family: 'IBM Plex Sans', sans-serif; color: #001f35;">
     <p>Pozdrawiam,</p>
     <div>
       <div style="float: left; width: 214px; text-align: center; min-height: 120px; padding-bottom:10px;">
-        <img style="height: 100px; padding-top: 15px;" src="https://www.emultimax.pl/images/assets/signature/avatar.png" alt="avatar">
+        <img style="height: 100px; padding-top: 15px;" src=${avatarImage} alt="avatar">
       </div>
       <div style="float: left; border-left: 1px solid #eff1f3; min-height: 120px; width: 250px; padding-left: 20px; padding-bottom:10px;">
         <p style="text-align: left; font-size: 22px; margin: 0px; padding: 0px; color: #001f35; font-weight: 700;">${
-          data.name
+          signValues.name
         }</p>
         <div style="font-size: 15px; color: #001f35; margin-bottom: 15px;">${
-          data.position
+          signValues.position
         }</div>
         <div>
           <a href="tel:${
-            data.phone
+            signValues.phone
           }" style="text-decoration: none; color: #001f35; font-size: 15px;">
-            <img style="height: 12px; margin-right: 5px;" src="https://www.emultimax.pl/images/assets/signature/phone.png">${
-              data.phone
-            }</a>
+            <img style="height: 12px; margin-right: 5px;" src=${phoneImage}>${
+      signValues.phone
+    }</a>
         </div>
         <div>
           <a href="mailto:${
-            data.email
+            signValues.email
           }"  style="text-decoration: none; color: #001f35; font-size: 15px;">
             <img style="height: 12px; margin-right: 5px;"
-              src="https://www.emultimax.pl/images/assets/signature/envelope.png">${
-                data.email
-              }</a>
+              src=${envelopeImage}>${signValues.email}</a>
         </div>
         <div>
           <a href="https://www.emultimax.pl"  style="text-decoration: none; color: #001f35; font-size: 15px;">
             <img style="height: 12px; margin-right: 5px;"
-              src="https://www.emultimax.pl/images/assets/signature/globe.png">https://www.emultimax.pl</a>
+              src=${globeImage}>https://www.emultimax.pl</a>
         </div>
       </div>
       <div style="clear: both"></div>
@@ -177,6 +127,20 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
     setOpen(true);
   };
 
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      position: "",
+      phone: "",
+      email: "",
+      workplace: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
+  });
+
   return (
     <Box sx={{ maxWidth: 600, margin: "50px auto" }}>
       <MyCard variant="outlined">
@@ -185,59 +149,58 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
           <TextField
             id="name"
             name="name"
-            value={data.name}
+            value={formik.values.name}
             label="Imię i nazwisko"
             variant="outlined"
             fullWidth
             margin="dense"
             size="small"
-            onChange={(e) => handleChange(e)}
-            error={validation.name ? true : false}
-            helperText={validation.name}
+            onChange={formik.handleChange}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
           />
           <TextField
             id="position"
             name="position"
-            value={data.position}
+            value={formik.values.position}
             label="Stanowisko"
             variant="outlined"
             fullWidth
             margin="dense"
             size="small"
-            onChange={(e) => handleChange(e)}
-            error={validation.position ? true : false}
-            helperText={validation.position}
+            onChange={formik.handleChange}
+            error={formik.touched.position && Boolean(formik.errors.position)}
+            helperText={formik.touched.position && formik.errors.position}
           />
           <TextField
-            type="number"
             id="phone"
             name="phone"
-            value={data.phone}
+            value={formik.values.phone}
             label="Numer telefonu"
             variant="outlined"
             fullWidth
             margin="dense"
             size="small"
-            onChange={(e) => handleChange(e)}
-            error={validation.phone ? true : false}
-            helperText={validation.phone}
+            onChange={formik.handleChange}
+            error={formik.touched.phone && Boolean(formik.errors.phone)}
+            helperText={formik.touched.phone && formik.errors.phone}
           />
           <TextField
             id="email"
             name="email"
-            value={data.email}
+            value={formik.values.email}
             label="Adres email"
             variant="outlined"
             fullWidth
             margin="dense"
             size="small"
-            onChange={(e) => handleChange(e)}
-            error={validation.email ? true : false}
-            helperText={validation.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
           <SelectFormControl
             fullWidth
-            error={validation.workplace ? true : false}
+            error={formik.touched.workplace && Boolean(formik.errors.workplace)}
           >
             <InputLabel id="workplace-label" size="small">
               Miejsce pracy
@@ -248,15 +211,17 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
               label="Miejsce pracy"
               variant="outlined"
               name="workplace"
-              value={data.workplace}
-              onChange={(e) => handleChange(e)}
+              value={formik.values.workplace}
+              onChange={formik.handleChange}
               size="small"
             >
               {workspace}
             </Select>
-            <FormHelperText>{validation.workplace}</FormHelperText>
+            <FormHelperText>
+              {formik.touched.workplace && formik.errors.workplace}
+            </FormHelperText>
           </SelectFormControl>
-          <InputFile
+          {/* <InputFile
             type="file"
             id="file"
             name="file"
@@ -268,8 +233,13 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
             InputLabelProps={{
               shrink: true,
             }}
+          /> */}
+          <Btn
+            icon={<SendIcon />}
+            handle={formik.handleSubmit}
+            name={"Generuj"}
+            type={"submit"}
           />
-          <Btn icon={<SendIcon />} handle={handleSubmit} name={"Generuj"} />
         </Form>
       </MyCard>
     </Box>

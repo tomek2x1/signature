@@ -2,10 +2,15 @@ import Button from "@mui/material/Button";
 
 import { styled } from "@mui/styles";
 
-const Btn = ({ icon, handle, name }) => {
+const Btn = ({ icon, handle, name, type }) => {
   return (
     <MyButtonWrapper>
-      <MyButton variant="contained" endIcon={icon} onClick={(e) => handle(e)}>
+      <MyButton
+        type={type}
+        variant="contained"
+        endIcon={icon}
+        onClick={(e) => handle(e)}
+      >
         {name}
       </MyButton>
     </MyButtonWrapper>
