@@ -39,7 +39,7 @@ const App = () => {
     setSnack(true);
   };
 
-  const handleCloseSnack = (event, reason) => {
+  const handleCloseSnack = (e) => {
     setSnack(false);
   };
 
