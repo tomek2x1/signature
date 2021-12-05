@@ -193,7 +193,7 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
             id="name"
             name="name"
             value={formik.values.name}
-            label="Imię i nazwisko"
+            label="Imię i nazwisko: *"
             variant="outlined"
             fullWidth
             margin="dense"
@@ -206,7 +206,7 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
             id="position"
             name="position"
             value={formik.values.position}
-            label="Stanowisko"
+            label="Stanowisko: *"
             variant="outlined"
             fullWidth
             margin="dense"
@@ -219,7 +219,7 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
             id="phone"
             name="phone"
             value={formik.values.phone}
-            label="Numer telefonu"
+            label="Numer telefonu: *"
             variant="outlined"
             fullWidth
             margin="dense"
@@ -232,7 +232,7 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
             id="email"
             name="email"
             value={formik.values.email}
-            label="Adres email"
+            label="Adres email: *"
             variant="outlined"
             fullWidth
             margin="dense"
@@ -246,12 +246,12 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
             error={formik.touched.workplace && Boolean(formik.errors.workplace)}
           >
             <InputLabel id="workplace-label" size="small">
-              Miejsce pracy
+              Miejsce pracy: *
             </InputLabel>
             <Select
               labelId="workplace-label"
               id="workplace"
-              label="Miejsce pracy"
+              label="Miejsce pracy: *"
               variant="outlined"
               name="workplace"
               value={formik.values.workplace}
@@ -279,6 +279,9 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
               shrink: true,
             }}
           />
+          <Legend>
+            <Star>*</Star> pola wymagane
+          </Legend>
           <Btn
             icon={<SendIcon />}
             handle={formik.handleSubmit}
@@ -316,6 +319,14 @@ const Form = styled("form")({
 
 const InputFile = styled(TextField)({
   marginTop: 15,
+});
+
+const Legend = styled("div")({
+  textAlign: "left",
+});
+
+const Star = styled("span")({
+  color: "#ea5036",
 });
 
 const workplaces = [
