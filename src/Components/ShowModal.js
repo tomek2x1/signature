@@ -46,7 +46,7 @@ const ModalBox = styled(Box)({
   left: "50%",
   transform: "translate(-50%, -50%)",
   minWidth: 400,
-  maxWidth: "80vw",
+  maxWidth: "60vw",
   bgcolor: "background.paper",
   border: "2px solid #eaeced",
   boxShadow: 24,
@@ -61,11 +61,11 @@ const ModalBox = styled(Box)({
 });
 
 const ModalHeader = styled(Typography)({
-  fontFamily: "'IBM Plex Sans', sans-serif",
+  fontFamily: "'Lexend', sans-serif",
   borderBottom: "1px solid #eaeced",
   paddingBottom: "10px",
   marginBottom: 0,
-  color: "#ea5036",
+  color: "#001f35",
 });
 
 const ModalBody = styled(Box)({
@@ -76,7 +76,6 @@ const ModalBody = styled(Box)({
 
 const pre = {
   fontSize: 10,
-  wordWrap: "break-word",
   width: "100%",
 };
 
