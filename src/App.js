@@ -26,7 +26,6 @@ const App = () => {
     phone: "",
     email: "",
     workplace: "",
-    file: "",
     imageURL: "",
   });
 
