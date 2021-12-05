@@ -58,80 +58,79 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
     const typeOfWorker = workplaces.filter(
       (workplace) => workplace.type === signValues.workplace
     )[0];
-    const signatureHTML = `
-    <div>
-        <div style="max-width:600px; font-family: 'IBM Plex Sans', Arial, sans-serif; color: #001f35;">
-            <p>Pozdrawiam,</p>
-            <div>
-                <div style="float: left; width: 214px; text-align: center; min-height: 120px; padding-bottom:10px;">
-                    <img style="height: 100px; padding-top: 15px;"
-                        src=${avatarImage}>
-                </div>
-                <div
-                    style="float: left; border-left: 1px solid #eff1f3; min-height: 120px; width: 250px; padding-left: 20px; padding-bottom:10px;">
-                    <p
-                        style="text-align: left; font-size: 20px; margin: 0px; padding: 0px; color: #001f35; font-weight: 700;">${
-                          signValues.name
-                        }</p>
-                    <div style="font-size: 15px; color: #001f35; margin-bottom: 20px;">${
-                      signValues.position
-                    }</div>
-                    <div style="margin-bottom:3px;">
-                        <a href="tel:${
-                          signValues.phone
-                        }" style="text-decoration: none; color: #001f35; font-size: 15px;">
-                            <img style="height: 12px; margin-right: 5px;"
-                                src=${phoneImage}>${signValues.phone}</a>
-                    </div>
-                    <div style="margin-bottom:3px;">
-                        <a href="mailto:${
-                          signValues.email
-                        }" style="text-decoration: none; color: #001f35; font-size: 15px;">
-                            <img style="height: 12px; margin-right: 5px;"
-                                src=${envelopeImage}>${signValues.email}</a>
-                    </div>
-                    <div style="margin-bottom:3px;">
-                        <a href="https://www.emultimax.pl" target="_blank"
-                            style="text-decoration: none; color: #001f35; font-size: 15px;">
-                            <img style="height: 12px; margin-right: 5px;"
-                                src=${globeImage}>www.emultimax.pl</a>
-                    </div>
-                </div>
-                <div style="clear: both"></div>
+    const signatureHTML = `<div>
+    <div style="max-width:600px; font-family: 'IBM Plex Sans', Arial, sans-serif; color: #001f35;">
+        <p>Pozdrawiam,</p>
+        <div>
+            <div style="float: left; width: 214px; text-align: center; min-height: 120px; padding-bottom:10px;">
+                <img style="height: 100px; padding-top: 15px;"
+                    src=${avatarImage}>
             </div>
-            <div style="clear: both; margin-bottom: 15px; border-top: 1px solid #eff1f3;">
-                <div style="float: left; padding-left: 20px; width: 194px; margin-bottom: 5px; padding-top:10px">
-                    <div style="margin: 0; font-weight: 600; font-size: 10px;">
-                        P.W.
-                        MULTIMAX Damian Chwiejczak</div>
-                    <div style="margin: 0; font-weight: 400; font-size: 10px;">ul. Peowiaków 9, 22-400 Zamość</div>
-                    <div style="margin: 0; font-weight: 400; font-size: 10px;">NIP: 922-264-64-63</div>
-                </div>
-      ${
-        typeOfWorker.type === "Pracownik biurowy"
-          ? ""
-          : `
-                <div style="float: left; padding-left: 20px; width: 251px; margin-bottom: 5px; padding-top:10px">
-                    <div style="margin: 0; font-weight: 600; font-size: 10px;">${typeOfWorker.type}</div>
-                    <div style="margin: 0; font-weight: 400; font-size: 10px;">${typeOfWorker.address}</div>
-                    <div style="margin: 0; font-weight: 400; font-size: 10px;">${typeOfWorker.address1}</div>
-                </div>
-            `
-      }
-                <div style="clear: both"></div>
-            </div>
-            <div style="clear: both; display: block; padding-left: 20px; padding-right: 10px;">
+            <div
+                style="float: left; border-left: 1px solid #eff1f3; min-height: 120px; width: 250px; padding-left: 20px; padding-bottom:10px;">
                 <p
-                    style="font-weight: 700; font-size: 15px; margin-top:5px; margin-bottom: 10px; padding-top:10px; color: #001f35;">
-                    Zmieniamy się!</p>
-                <a href="https://www.emultimax.pl/pl/n/2021/Czas-na-zmiany./177" target="_blank"
-                    style="text-decoration: none;">
-                    <img style="width: 100%; max-width: 400px;"
-                        src=${rebrandingImage} alt="">
-                </a>
+                    style="text-align: left; font-size: 16px; margin: 0px; padding: 0px; color: #001f35; font-weight: 700;">${
+                      signValues.name
+                    }</p>
+                <div style="font-size: 13px; color: #001f35; margin-bottom: 20px;">${
+                  signValues.position
+                }</div>
+                <div style="margin-bottom:5px;">
+                    <a href="tel:${
+                      signValues.phone
+                    }" style="text-decoration: none; color: #001f35; font-size: 13px;">
+                        <img style="height: 12px; margin-right: 5px;"
+                            src=${phoneImage}>${signValues.phone}</a>
+                </div>
+                <div style="margin-bottom:5px;">
+                    <a href="mailto:${
+                      signValues.email
+                    }" style="text-decoration: none; color: #001f35; font-size: 13px;">
+                        <img style="height: 12px; margin-right: 5px;"
+                            src=${envelopeImage}>${signValues.email}</a>
+                </div>
+                <div style="margin-bottom:5px;">
+                    <a href="https://www.emultimax.pl" target="_blank"
+                        style="text-decoration: none; color: #001f35; font-size: 13px;">
+                        <img style="height: 12px; margin-right: 5px;"
+                            src=${globeImage}>www.emultimax.pl</a>
+                </div>
             </div>
+            <div style="clear: both"></div>
+        </div>
+        <div style="clear: both; margin-bottom: 15px; border-top: 1px solid #eff1f3;">
+            <div style="float: left; padding-left: 20px; width: 194px; margin-bottom: 5px; padding-top:10px">
+                <div style="margin: 0; font-weight: 600; font-size: 9px;">
+                    P.W.
+                    MULTIMAX Damian Chwiejczak</div>
+                <div style="margin: 0; font-weight: 400; font-size: 9px;">ul. Peowiaków 9, 22-400 Zamość</div>
+                <div style="margin: 0; font-weight: 400; font-size: 9px;">NIP: 922-264-64-63</div>
+            </div>
+    ${
+      typeOfWorker.type === "Salon sprzedaży w Zamościu"
+        ? ""
+        : `
+            <div style="float: left; padding-left: 20px; width: 251px; margin-bottom: 5px; padding-top:10px">
+                <div style="margin: 0; font-weight: 600; font-size: 9px;">${typeOfWorker.type}</div>
+                <div style="margin: 0; font-weight: 400; font-size: 9px;">${typeOfWorker.address}</div>
+                <div style="margin: 0; font-weight: 400; font-size: 9px;">${typeOfWorker.address1}</div>
+            </div>
+        `
+    }
+            <div style="clear: both"></div>
+        </div>
+        <div style="clear: both; display: block; padding-left: 20px; padding-right: 10px;">
+            <p
+                style="font-weight: 700; font-size: 13px; margin-top:5px; margin-bottom: 10px; padding-top:10px; color: #001f35;">
+                Zmieniamy się!</p>
+            <a href="https://www.emultimax.pl/pl/n/2021/Czas-na-zmiany./177" target="_blank"
+                style="text-decoration: none;">
+                <img style="width: 100%; max-width: 400px;"
+                    src=${rebrandingImage} alt="">
+            </a>
         </div>
     </div>
+</div>
   `;
 
     setCode(signatureHTML);
@@ -285,11 +284,6 @@ const InputFile = styled(TextField)({
 });
 
 const workplaces = [
-  {
-    type: "Pracownik biurowy",
-    address: "",
-    address1: "",
-  },
   {
     type: "Salon sprzedaży w Warszawie",
     address: "Trakt Lubelski 393a",
