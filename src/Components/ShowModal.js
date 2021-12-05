@@ -6,6 +6,40 @@ import { styled } from "@mui/styles";
 
 import ModalFooter from "./ModalFooter";
 
+const ShowModal = ({
+  signHTML,
+  closeModal,
+  open,
+  snack,
+  handleCopySignature,
+  handleCloseSnack,
+}) => {
+  return (
+    <Modal
+      open={open}
+      onClose={closeModal}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <ModalBox>
+        <ModalHeader id="modal-modal-title" variant="div" component="div">
+          Kod stopki
+        </ModalHeader>
+        <ModalBody id="modal-modal-description" sx={{ mt: 2 }}>
+          <div>
+            <pre style={pre}>{signHTML}</pre>
+          </div>
+        </ModalBody>
+        <ModalFooter
+          snack={snack}
+          handleCopySignature={handleCopySignature}
+          handleCloseSnack={handleCloseSnack}
+        />
+      </ModalBox>
+    </Modal>
+  );
+};
+
 const ModalBox = styled(Box)({
   position: "absolute",
   top: "50%",
@@ -46,37 +80,4 @@ const pre = {
   width: "100%",
 };
 
-const ShowModal = ({
-  signHTML,
-  closeModal,
-  open,
-  snack,
-  handleCopySignature,
-  handleCloseSnack,
-}) => {
-  return (
-    <Modal
-      open={open}
-      onClose={closeModal}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <ModalBox>
-        <ModalHeader id="modal-modal-title" variant="div" component="div">
-          Kod stopki
-        </ModalHeader>
-        <ModalBody id="modal-modal-description" sx={{ mt: 2 }}>
-          <div>
-            <pre style={pre}>{signHTML}</pre>
-          </div>
-        </ModalBody>
-        <ModalFooter
-          snack={snack}
-          handleCopySignature={handleCopySignature}
-          handleCloseSnack={handleCloseSnack}
-        />
-      </ModalBox>
-    </Modal>
-  );
-};
 export default ShowModal;
