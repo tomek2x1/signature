@@ -70,7 +70,7 @@ const validationSchema = yup.object({
   workplace: yup.string().required("Miejsce pracy jest wymagane"),
 });
 
-const SignatureForm = ({ data, setData, setCode, setOpen }) => {
+const SignatureForm = ({ data, setData, setCode, setOpen, setSpinner }) => {
   const [image, setImage] = useState({ file: "" });
 
   useEffect(() => {
@@ -88,6 +88,7 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
   });
 
   const handleSubmit = (formValues) => {
+    setSpinner(true);
     const { name, position, phone, email, workplace } = formValues;
     if (name && position && phone && email && workplace) {
       setData({
@@ -210,7 +211,6 @@ const SignatureForm = ({ data, setData, setCode, setOpen }) => {
   `;
 
     setCode(signatureHTML);
-    setOpen(true);
   };
 
   const formik = useFormik({

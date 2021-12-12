@@ -1,5 +1,7 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
+import { styled } from "@mui/styles";
 
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
@@ -8,6 +10,7 @@ import MuiAlert from "@mui/material/Alert";
 
 import SignatureForm from "./Components/SignatureForm";
 import ShowModal from "./Components/ShowModal";
+import Loader from "./Components/Loader";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -15,10 +18,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const App = () => {
   const [open, setOpen] = useState(false);
-  const closeModal = () => {
-    setOpen(false);
-    setSnack(false);
-  };
+  const [spinner, setSpinner] = useState(false);
 
   const [data, setData] = useState({
     name: "",
@@ -44,15 +44,35 @@ const App = () => {
     setSnack(false);
   };
 
+  const closeModal = () => {
+    setCode(false);
+    setOpen(false);
+    setSnack(false);
+  };
+
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    if (spinner === true) {
+      setSpinner(false);
+      setOpen(true);
+    }
+  }, [code]);
+
   return (
-    <div className="App">
+    <AppContainer>
       <Stack>
         <SignatureForm
           data={data}
           setData={setData}
           setCode={setCode}
           setOpen={setOpen}
+          setSpinner={setSpinner}
         />
+        {spinner ? <Loader /> : null}
         <ShowModal
           signHTML={code}
           closeModal={closeModal}
@@ -73,8 +93,12 @@ const App = () => {
           </Snackbar>
         ) : null}
       </Stack>
-    </div>
+    </AppContainer>
   );
 };
 
 export default App;
+
+const AppContainer = styled("div")({
+  position: "relative",
+});
