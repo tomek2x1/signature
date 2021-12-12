@@ -143,6 +143,7 @@ const SignatureForm = ({
       setImage({ file: file });
     } else {
       e.target.value = null;
+      setImage({ file: "" });
       setData({ ...data, imageURL: "" });
       setImageError(
         "Plik nie został załadowany. Wspierane formaty plików to: jpg, jpeg, png."
