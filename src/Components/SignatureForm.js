@@ -50,6 +50,8 @@ const workplaces = [
   },
 ];
 
+const supportedFormats = ["image/jpg", "image/jpeg", "image/png"];
+
 const validationSchema = yup.object({
   name: yup.string().required("Podaj swoje imię i nazwisko"),
   position: yup.string().required("Podaj swoją nazwę stanowiska"),
@@ -70,8 +72,16 @@ const validationSchema = yup.object({
   workplace: yup.string().required("Miejsce pracy jest wymagane"),
 });
 
-const SignatureForm = ({ data, setData, setCode, setOpen, setSpinner }) => {
-  const [image, setImage] = useState({ file: "" });
+const SignatureForm = ({
+  data,
+  setData,
+  setCode,
+  setOpen,
+  setSpinner,
+  image,
+  setImage,
+}) => {
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     if (data.imageURL != "") {
@@ -128,7 +138,16 @@ const SignatureForm = ({ data, setData, setCode, setOpen, setSpinner }) => {
 
   const handleImage = (e) => {
     var file = e.target.files[0];
-    setImage({ file: file });
+    if (supportedFormats.includes(file?.type)) {
+      setImageError(false);
+      setImage({ file: file });
+    } else {
+      e.target.value = null;
+      setData({ ...data, imageURL: "" });
+      setImageError(
+        "Plik nie został załadowany. Wspierane formaty plików to: jpg, jpeg, png."
+      );
+    }
   };
 
   const generateSignature = (signValues) => {
@@ -322,6 +341,13 @@ const SignatureForm = ({ data, setData, setCode, setOpen, setSpinner }) => {
               shrink: true,
             }}
           />
+          <FormHelperText>
+            {imageError ? (
+              <p class="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeMedium MuiFormHelperText-contained css-1wc848c-MuiFormHelperText-root">
+                {imageError}
+              </p>
+            ) : null}
+          </FormHelperText>
           <Legend>
             <Star>*</Star> pola wymagane
           </Legend>

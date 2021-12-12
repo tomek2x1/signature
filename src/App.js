@@ -19,6 +19,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const App = () => {
   const [open, setOpen] = useState(false);
   const [spinner, setSpinner] = useState(false);
+  const [image, setImage] = useState({ file: "" });
 
   const [data, setData] = useState({
     name: "",
@@ -45,6 +46,7 @@ const App = () => {
   };
 
   const closeModal = () => {
+    setImage({ file: "" });
     setCode(false);
     setOpen(false);
     setSnack(false);
@@ -71,6 +73,8 @@ const App = () => {
           setCode={setCode}
           setOpen={setOpen}
           setSpinner={setSpinner}
+          image={image}
+          setImage={setImage}
         />
         {spinner ? <Loader /> : null}
         <ShowModal
