@@ -10,7 +10,6 @@ import MuiAlert from "@mui/material/Alert";
 
 import SignatureForm from "./Components/SignatureForm";
 import ShowModal from "./Components/ShowModal";
-import Loader from "./Components/Loader";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -18,16 +17,12 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const App = () => {
   const [open, setOpen] = useState(false);
-  const [spinner, setSpinner] = useState(false);
-  const [image, setImage] = useState({ file: "" });
 
   const [data, setData] = useState({
     name: "",
     position: "",
     phone: "",
     email: "",
-    workplace: "",
-    imageURL: "",
   });
 
   // Treść kodu html
@@ -46,7 +41,6 @@ const App = () => {
   };
 
   const closeModal = () => {
-    setImage({ file: "" });
     setCode(false);
     setOpen(false);
     setSnack(false);
@@ -58,10 +52,11 @@ const App = () => {
       firstUpdate.current = false;
       return;
     }
-    if (spinner === true) {
-      setSpinner(false);
-      setOpen(true);
+    if (code === false) {
+      setOpen(false);
+      return;
     }
+    setOpen(true);
   }, [code]);
 
   return (
@@ -72,11 +67,7 @@ const App = () => {
           setData={setData}
           setCode={setCode}
           setOpen={setOpen}
-          setSpinner={setSpinner}
-          image={image}
-          setImage={setImage}
         />
-        {spinner ? <Loader /> : null}
         <ShowModal
           signHTML={code}
           closeModal={closeModal}
