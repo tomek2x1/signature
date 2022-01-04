@@ -21,6 +21,7 @@ const App = () => {
   const [data, setData] = useState({
     name: "",
     position: "",
+    mobile: "",
     phone: "",
     email: "",
   });
