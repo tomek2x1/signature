@@ -56,35 +56,35 @@ const SignatureForm = ({
     console.log("signValues", signValues)
     const signatureHTML = `
   <div style="max-width:600px; font-family: Arial, sans-serif; margin-bottom:20px;">
-    <div style="margin-bottom:5px; font-size:15px;">Pozdrawiam,</div>
+    <div style="margin-bottom:5px; font-size:15px; color:#000;">Pozdrawiam,</div>
     <div style="padding:10px; border-bottom:1px solid #7F7F7F; margin-bottom:6px;">
-        <div style="font-size:19px; font-weight:700;">${signValues.name}</div>
-        <div style="font-size:15px; margin-top:2px; margin-bottom:15px">${signValues.position}</div>
+        <div style="font-size:19px; font-weight:700; color:#000;">${signValues.name}</div>
+        <div style="font-size:15px; margin-top:2px; margin-bottom:15px; color:#000;">${signValues.position}</div>
         ${signValues.mobile != "" ? `
         <a href="tel:${signValues.mobile}" style="display:block; text-decoration: none; color:#000; cursor: pointer; font-size:13px; margin-top:2px; margin-bottom:2px;">
           <span style="display:inline-block; width:20px;">
               <img src="${mobile}"/>
           </span>
-          <span>${signValues.mobile}</span>
+          <span style="color:#000;">${signValues.mobile}</span>
         </a>
     ` : ""}
         <a href="tel:${signValues.phone}" style="display:block; text-decoration: none; color:#000; cursor: pointer; font-size:13px; margin-top:2px; margin-bottom:2px;">
             <span style="display:inline-block; width:20px;">
                 <img src="${phone}"/>
             </span>
-            <span>${signValues.phone}</span>
+            <span style="color:#000;">${signValues.phone}</span>
         </a>
         <a href="mailto:${signValues.email}" style="display:block; text-decoration: none; color:#000; cursor: pointer; font-size:13px; margin-top:2px; margin-bottom:2px;">
             <span style="display:inline-block; width:20px;">
                 <img src="${envelope}"/>
             </span>
-            <span>${signValues.email}</span>
+            <span style="color:#000;">${signValues.email}</span>
         </a>
         <a href="https://www.emultimax.pl/" target="_blank" style="display:block; text-decoration: none; color:#000; cursor: pointer; font-size:13px; margin-top:2px; margin-bottom:2px;">
             <span style="display:inline-block; width:20px;">
                 <img src="${home}"/>
             </span>
-            <span>www.emultimax.pl</span>
+            <span style="color:#000;">www.emultimax.pl</span>
         </a>
         <a href="https://www.emultimax.pl/" target="_blank" style="text-decoration: none; cursor: pointer;">
             <img style="margin-top:5px;" src="${logo}" />
