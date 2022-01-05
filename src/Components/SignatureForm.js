@@ -53,7 +53,6 @@ const SignatureForm = ({
   };
 
   const generateSignature = (signValues, mobile, phone, envelope, home, logo) => {
-    console.log("signValues", signValues)
     const signatureHTML = `
   <div style="max-width:600px; font-family: Arial, sans-serif; margin-bottom:20px;">
     <div style="margin-bottom:5px; font-size:15px; color:#000;">Pozdrawiam,</div>
